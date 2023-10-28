@@ -7,7 +7,6 @@ const { InjectManifest } = require('workbox-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 
 // TODO: Add CSS loaders and babel to webpack.
-const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = () => {
   return {
@@ -25,7 +24,6 @@ module.exports = () => {
         template: './index.html',
         title: 'Webpack Plugin',
       }),
-      new MiniCSSExtractPlugin(),
       new InjectManifest({
         swSrc: './src-sw.js',
         swDest: 'src-sw.js',
@@ -54,6 +52,10 @@ module.exports = () => {
       rules: [
         {
           test: /\.css$/i,
+          use: ['style-loader', 'css-loader'],
+        },
+        {
+          test: /\.m?js$/,
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
@@ -69,4 +71,4 @@ module.exports = () => {
       ],
     },
   };
-};
+};     
